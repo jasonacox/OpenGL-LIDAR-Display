@@ -33,9 +33,21 @@ make
 ```
 
 ### Step 3 - Run the Display
-Plug in your RPLIDAR A1 device and run the `lidar` executable:
+Plug in your RPLIDAR A1 device and run the `lidar` executable.  Use Ctrl-C to stop.
 
-```bash
-./bin/lidar
+```
+$ ./bin/lidar               
+LIDAR OpenGL Display for Slamtec RPLIDAR Device
+Using RPLIDAR SDK Version: 1.12.0
+Setting serial port baudrate...
+Connected via /dev/tty.SLAB_USBtoUART at 115200 baud
+RPLIDAR S/N: CC8F9A86C0E09CC7A2E09DF75E5D3077
+Firmware Ver: 1.28
+Hardware Rev: 5
+RPLidar health status : 0
+Launching OpenGL Window
+^C Received - Stopping - Shutting down LIDAR
+
+$
 ```
 
