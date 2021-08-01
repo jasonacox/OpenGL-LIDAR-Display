@@ -1,14 +1,14 @@
 # OpenGL-LIDAR-Display
 
 ## Description
-This project provides an OpenGL based display for LIDAR imaging using the [Slamtec  RPLIDAR A1 device](https://www.slamtec.com/en/Lidar/A1).  
+This project provides a realtime OpenGL based display for LIDAR point cloud imaging. It is based on the [Slamtec  RPLIDAR A1 device](https://www.slamtec.com/en/Lidar/A1).
 
 ![Display](demo.png)
 
-The display uses OpenGL, GLUT and the Slamtec RPLIDAR SDK. MacOS is the target platform but it should be easy to run on any OpenGL platform (Linux, RPi, Windows).
+Requires: OpenGL, GLUT and the Slamtec RPLIDAR SDK. MacOS is the target platform but it should be easy to port to any OpenGL platform (Linux, RPi, Windows).
 
 ## Get Started
-To build this project, follow the steps below.  If you are on macOS, you can jump to step two below.
+To build this project, follow the steps below.  If you are on macOS, you can jump to step 2 below.
 
 ### Step 1 - Build RPLIDAR SDK
 You can run the `build.sh` script included to download and build the SDK for RPLIDAR. This will copy the new headers and libraries into the ./lib and ./include folders.
