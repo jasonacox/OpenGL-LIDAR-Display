@@ -14,7 +14,7 @@ To build this project, follow the steps below.  If you are on macOS, you can jum
 You can run the `build.sh` script included to download and build the SDK for RPLIDAR. This will copy the new headers and libraries into the ./lib and ./include folders.
 
 ### Step 2 - Build the lidar binary
-The `lidar` binary is built by using the include Makefile.  If you are not using a Mac or have a different UART serial port you want to use, edit the [lidar.cpp](lidar.cpp) code to update the PORT value in Settings.  Depending upon your applications, you can adjust the SCALE, windows SCREEN size and window location START points.
+The `lidar` binary is built by using the included Makefile.  If you are not using a Mac or have a different UART serial port you want to use, edit the [lidar.cpp](lidar.cpp) code to update the PORT value in Settings.  Depending upon your applications, you can also adjust the SCALE, windows SCREEN size and window location START points.
 
 ```cpp
 // Settings 
