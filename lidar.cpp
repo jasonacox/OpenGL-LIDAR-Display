@@ -142,7 +142,8 @@ bool checkRPLIDARHealth(RPlidarDriver * drv)
 // GLOBALS 
 RPlidarDriver * drv;
 const char * opt_com_path = NULL;
-_u32         baudrateArray[2] = {115200, 256000};
+_u32         defbaudrateArray[2] = {115200, 256000};
+_u32        *baudrateArray = defbaudrateArray;
 _u32         opt_com_baudrate = 0;
 u_result     op_result;
 
@@ -219,10 +220,10 @@ int main(int argc, char** argv) {
         opt_com_baudrate = strtoul(argv[2], NULL, 10);
         if (opt_com_baudrate == 0) {
            printf("Could not convert %s to unsigned long", argv[2]);
-           exit(3)
+           exit(3);
         }
         baudrateArray = &opt_com_baudrate;
-        baudRateArraySize = 1
+        baudRateArraySize = 1;
     }
 
     // Use default if not specified
