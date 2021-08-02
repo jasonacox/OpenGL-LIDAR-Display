@@ -51,3 +51,22 @@ Launching OpenGL Window
 $
 ```
 
+## Device 
+
+This project uses the Slamtec RPLIDAR A1M8 LIDAR Sensor.  It provides a 2D 360 degree, 12m scanning radius and is useful for obstacle avoidance and navigation for robots.
+
+![Display](Slamtec-RPLIDAR-A1.png)
+
+* Measurement frequency up to 8000 times/s
+* Weight: 0.37kg
+* Size: 13cm x 10cm x 8cm 
+* Range: 0.15 - 6m
+* Resolution: < 0.5mm @ ≤ 1 Degree
+* Technology: OPTMAG wireless power and optical communication 
+* Links: [Slamtec](https://www.slamtec.com/en/Lidar/A1) [Amazon](https://www.amazon.com/Slamtec-RPLIDAR-Scanning-Avoidance-Navigation/dp/B07TJW5SXF)
+
+
+### Device Setup
+
+The device requires the Silicon Labs CP210x USB to UART Bridge Virtual COM Port (VCP) driver.  See [here](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) for downloading this driver if you do not have it already installed.
+
