@@ -142,10 +142,10 @@ bool checkRPLIDARHealth(RPlidarDriver * drv)
 // GLOBALS 
 RPlidarDriver * drv;
 const char * opt_com_path = NULL;
-_u32         baudrateArray[2] = {115200, 256000};
+_u32         defbaudrateArray[2] = {115200, 256000};
+_u32        *baudrateArray = defbaudrateArray;
 _u32         opt_com_baudrate = 0;
 u_result     op_result;
-bool useArgcBaudrate = false;
 
 // RENDER - Pull data from LIDAR and render to display
 void renderScreen(void){
@@ -213,11 +213,17 @@ int main(int argc, char** argv) {
     // Optional - read serial port from the command line...
     if (argc>1) opt_com_path = argv[1]; 
 
+    size_t baudRateArraySize = (sizeof(baudrateArray))/ (sizeof(baudrateArray[0]));
     // Optional - read baud rate from the command line if specified...
     if (argc>2)
     {
         opt_com_baudrate = strtoul(argv[2], NULL, 10);
-        useArgcBaudrate = true;
+        if (opt_com_baudrate == 0) {
+           printf("Could not convert %s to unsigned long", argv[2]);
+           exit(3);
+        }
+        baudrateArray = &opt_com_baudrate;
+        baudRateArraySize = 1;
     }
 
     // Use default if not specified
@@ -226,27 +232,30 @@ int main(int argc, char** argv) {
     }
 
     // Create the RPLIDAR SDK driver instance
-	drv = RPlidarDriver::CreateDriver(DRIVER_TYPE_SERIALPORT);
+    drv = RPlidarDriver::CreateDriver(DRIVER_TYPE_SERIALPORT);
     if (!drv) {
         printf("insufficent memory, exit\n");
-        exit(-2);
+        exit(2);
     }
     
     // Grab device info
     rplidar_response_device_info_t devinfo;
     bool connectSuccess = false;
     size_t i;
-    if(useArgcBaudrate)
+
+    if(!drv)
+        drv = RPlidarDriver::CreateDriver(DRIVER_TYPE_SERIALPORT);
+
+    for(i = 0; i < baudRateArraySize; ++i)
     {
-        if(!drv)
-            drv = RPlidarDriver::CreateDriver(DRIVER_TYPE_SERIALPORT);
-        if (IS_OK(drv->connect(opt_com_path, opt_com_baudrate)))
+        if(IS_OK(drv->connect(opt_com_path, baudrateArray[i])))
         {
             op_result = drv->getDeviceInfo(devinfo);
 
             if (IS_OK(op_result)) 
             {
                 connectSuccess = true;
+                break;
             }
             else
             {
@@ -255,30 +264,7 @@ int main(int argc, char** argv) {
             }
         }
     }
-    else
-    {
-        size_t baudRateArraySize = (sizeof(baudrateArray))/ (sizeof(baudrateArray[0]));
-        for(i = 0; i < baudRateArraySize; ++i)
-        {
-            if(!drv)
-                drv = RPlidarDriver::CreateDriver(DRIVER_TYPE_SERIALPORT);
-            if(IS_OK(drv->connect(opt_com_path, baudrateArray[i])))
-            {
-                op_result = drv->getDeviceInfo(devinfo);
 
-                if (IS_OK(op_result)) 
-                {
-                    connectSuccess = true;
-                    break;
-                }
-                else
-                {
-                    delete drv;
-                    drv = NULL;
-                }
-            }
-        }
-    }
     if (!connectSuccess) {
         fprintf(stderr, "Error, cannot bind to the specified serial port %s.\n"
             , opt_com_path);
@@ -311,20 +297,12 @@ int main(int argc, char** argv) {
         glutDisplayFunc(renderScreen);
         glutIdleFunc(renderScreen);
         glutMainLoop();
-        
-        // End
         drv->stop();
         drv->stopMotor();
-        RPlidarDriver::DisposeDriver(drv);
-        drv = NULL;
-        return 0;
-        // done!
     }
-    else {
-        // Device is not OK - end
-        RPlidarDriver::DisposeDriver(drv);
-        drv = NULL;
-        return 0;
-    }
+        
+    delete drv;
+    drv = NULL;
+    return 0;
 }
 
