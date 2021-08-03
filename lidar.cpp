@@ -296,12 +296,14 @@ int main(int argc, char** argv) {
         drv->startScan(0,1);
         glutDisplayFunc(renderScreen);
         glutIdleFunc(renderScreen);
+        // Enter continuous loop
         glutMainLoop();
+
+        // Shutdown
         drv->stop();
         drv->stopMotor();
     }
-        
-    delete drv;
+    RPlidarDriver::DisposeDriver(drv);
     drv = NULL;
     return 0;
 }

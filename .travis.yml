@@ -1,0 +1,19 @@
+os: osx
+osx_image: xcode12.3
+language: objective-c
+
+stages:
+  - rplidar-sdk
+  - lidar
+
+jobs:
+  include:
+    - stage: rplidar-sdk
+      script:
+        - echo "Building RPLIDAR SDK...."
+        - bash build.sh
+
+    - stage: lidar
+      script: 
+        - echo "Building lidar binary..."
+        - make
