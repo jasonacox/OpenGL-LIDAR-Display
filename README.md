@@ -1,5 +1,7 @@
 # OpenGL-LIDAR-Display
 
+[![Build Status](https://travis-ci.com/jasonacox/OpenGL-LIDAR-Display.svg?branch=main)](https://travis-ci.com/jasonacox/OpenGL-LIDAR-Display)
+
 ## Description
 This project provides a realtime OpenGL based display for LIDAR point cloud imaging. It is based on the [Slamtec  RPLIDAR A1 device](https://www.slamtec.com/en/Lidar/A1).
 
